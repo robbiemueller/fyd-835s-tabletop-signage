@@ -32,9 +32,15 @@ has sound:
 
 ## Players
 
-- **[Loop Player](../player/)** (recommended): full screen, seamless loop, no controls, starts at boot, double-tap mute.
-  Videos go in `/sdcard/Movies/loop/`. On Windows, `scripts/windows/push-video.ps1 video.mp4` encodes, copies and
-  reloads in one step.
+- **[Loop Player](https://github.com/robbiemueller/loop-player)** (recommended): full screen, seamless loop, no
+  controls, starts at boot, double-tap mute, and a hold-3-seconds menu for fit/fill and kiosk mode. Videos go in
+  `/sdcard/Movies/loop/`. On Windows, `scripts/windows/push-video.ps1 video.mp4` encodes, copies and reloads in one step.
+  ```sh
+  adb install -r LoopPlayer.apk
+  adb shell pm grant io.github.robbiemueller.loopplayer android.permission.READ_EXTERNAL_STORAGE
+  adb shell mkdir -p /sdcard/Movies/loop
+  ```
+  The `pm grant` line saves tapping **Allow** on the storage prompt at first launch.
 - **Stock RockVideoPlayer** (`android.rk.RockVideoPlayer/.VideoPlayActivity`): set **⋯ → Play mode → Repeat one**
   once and it loops, but it **flashes its controls every time the file restarts**. A workaround is to repeat the loop
   many times inside one file (`ffmpeg -f concat … -c copy`), but that file gets big and slow to copy.

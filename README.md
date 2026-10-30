@@ -38,8 +38,9 @@ Details: [docs/findings.md](docs/findings.md).
 3. **From your computer:** `adb connect <sign-ip>:5555`
 4. **Remove the vendor software:** `adb push scripts/device/debloat.sh /sdcard/ && adb shell su -c sh /sdcard/debloat.sh`
 5. **Block its servers, fix the clock and lock ADB down:** see the guide, step 8.
-6. **Play your own videos:** install the [Loop Player](player/) app (full screen, seamless loop, no controls,
-   starts at boot, double-tap to mute). See [docs/playing-video.md](docs/playing-video.md).
+6. **Play your own videos:** install [**Loop Player**](https://github.com/robbiemueller/loop-player), our tiny
+   companion app (full screen, seamless loop, no controls, starts at boot, double-tap to mute). See
+   [docs/playing-video.md](docs/playing-video.md).
 
 ## Repo layout
 
@@ -48,7 +49,7 @@ Details: [docs/findings.md](docs/findings.md).
 | [docs/](docs/) | Hardware, findings, step-by-step cleanup, playing video, troubleshooting |
 | [scripts/device/](scripts/device/) | `sh` scripts that run **on the sign** as root (from a terminal app or `adb shell su -c`). Platform-independent. |
 | [scripts/windows/](scripts/windows/) | PowerShell helpers for Windows: find and connect, read-only inventory, debloat/restore, screenshots, push a video |
-| [player/](player/) | Loop Player: a tiny Android app (no Gradle) that loops the videos in a folder full screen |
+| [loop-player](https://github.com/robbiemueller/loop-player) (separate repo) | Loop Player: a 16 KB Android app that loops the videos in a folder full screen, on this sign or any Android 5+ screen |
 
 ## License
 
