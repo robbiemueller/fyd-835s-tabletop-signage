@@ -1,0 +1,9 @@
+# Build output and signing keys: never commit a keystore
+player/build/
+*.keystore
+*.jks
+
+# Per-device data the Windows scripts write (contains your unit's serial, MAC address and network details)
+inventory/
+screenshots/
+scripts/windows/.serial
