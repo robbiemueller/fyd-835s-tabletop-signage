@@ -3,7 +3,8 @@
 #   .\push-video.ps1 C:\path\video.mp4                     replace the playlist with this one video
 #   .\push-video.ps1 C:\path\video.mp4 -Add -Name 02-menu  add it to the playlist as 02-menu.mp4
 #   .\push-video.ps1 C:\path\video.mp4 -Mute               strip the sound
-param([Parameter(Mandatory)][string]$Video, [string]$Name, [switch]$Add, [switch]$Mute)
+#   .\push-video.ps1 C:\path\video.mp4 -Crf 20             higher quality (bigger file) than the default 24
+param([Parameter(Mandatory)][string]$Video, [string]$Name, [switch]$Add, [switch]$Mute, [int]$Crf = 24)
 . "$PSScriptRoot\common.ps1"
 
 if (-not $Name) { $Name = '01-' + [IO.Path]::GetFileNameWithoutExtension($Video) }
@@ -11,7 +12,7 @@ $dir = '/sdcard/Movies/loop'
 $tmp = Join-Path $env:TEMP "$Name.mp4"
 
 $audio = if ($Mute) { @('-an') } else { @('-c:a', 'aac', '-b:a', '160k') }
-ffmpeg -hide_banner -loglevel error -y -i $Video -c:v libx264 -profile:v main -level 3.1 -preset slow -crf 19 `
+ffmpeg -hide_banner -loglevel error -y -i $Video -c:v libx264 -profile:v main -level 3.1 -preset slow -crf $Crf `
     -pix_fmt yuv420p -g 48 @audio -movflags +faststart $tmp
 Write-Host ("Encoded {0:N1} MB (the sign copies at about 1 MB/s)" -f ((Get-Item $tmp).Length / 1MB))
 

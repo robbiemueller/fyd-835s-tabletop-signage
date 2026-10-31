@@ -11,12 +11,15 @@
 
 ```sh
 ffmpeg -i input.mp4 -vf "scale=600:1024:force_original_aspect_ratio=decrease,pad=600:1024:(ow-iw)/2:(oh-ih)/2" \
-  -c:v libx264 -profile:v main -level 3.1 -preset slow -crf 19 -pix_fmt yuv420p -g 48 \
+  -c:v libx264 -profile:v main -level 3.1 -preset slow -crf 24 -pix_fmt yuv420p -g 48 \
   -c:a aac -b:a 160k -movflags +faststart sign.mp4
 ```
 
-The RK3126 decodes 1080p H.264 in hardware, but there's no point sending more than the panel's 600 × 1024. Copying
-over Wi-Fi runs at about **1 MB/s**, so a 90-second loop at the settings above (about 30 MB) takes half a minute.
+The RK3126 decodes 1080p H.264 in hardware, but there's no point sending more than the panel's 600 × 1024. CRF 24
+looks the same as CRF 19 on this 7-inch panel at about half the file size, which matters with only about 5 GB of
+storage shared with the apps (compared on glitter, dark and fast-moving footage; by CRF 30 sequins and film grain
+visibly soften). Copying over Wi-Fi runs at about **1 MB/s**, so a 90-second loop at the settings above (15–20 MB)
+takes 15–20 seconds.
 
 ## Sound
 
